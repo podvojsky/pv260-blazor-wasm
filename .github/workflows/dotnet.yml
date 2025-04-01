@@ -31,12 +31,12 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: publish
-      run: dotnet publish -o www # dotnet publish -c Release -o artifacts
+      run: dotnet publish -o www --pathbase=/pv260-blazor-wasm # dotnet publish -c Release -o artifacts
     - name: upload
       id: deployment
       uses: actions/upload-pages-artifact@v3.0.1
       with:
-        path: www/wwwroot
+        path: www/wwwroot/pv260-blazor-wasm
 
   # Deployment job
   deploy:
