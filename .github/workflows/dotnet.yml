@@ -31,9 +31,21 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: publish
-      run: dotnet publish -o www
+      run: dotnet publish -o www/wwwroot
     - name: upload
+      id: deployment
       uses: actions/upload-pages-artifact@v3.0.1
       with:
         path: www
-      
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
