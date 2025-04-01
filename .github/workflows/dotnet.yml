@@ -31,7 +31,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: publish
-      run: dotnet publish -o www --pathbase=/pv260-blazor-wasm # dotnet publish -c Release -o artifacts
+      run: dotnet publish -o www # dotnet publish -c Release -o artifacts
     - name: upload
       id: deployment
       uses: actions/upload-pages-artifact@v3.0.1
@@ -46,6 +46,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    - name: Rewrite base href
+      uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
+      with:
+        html_path: index.html
+        base_href: /pv260-blazor-wasm/
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
