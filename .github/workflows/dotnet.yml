@@ -31,12 +31,12 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: publish
-      run: dotnet publish -o www/wwwroot
+      run: dotnet publish -o www
     - name: upload
       id: deployment
       uses: actions/upload-pages-artifact@v3.0.1
       with:
-        path: www
+        path: www/wwwroot
 
   # Deployment job
   deploy:
